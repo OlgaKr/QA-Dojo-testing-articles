@@ -55,8 +55,30 @@ export async function createArticle(
   await page.getByTestId('editor-submit').click();
 
   await expect(
-    page.getByRole('heading', { name: title, level: 1 }),
+    page.getByRole('heading', {
+      name: title,
+      level: 1,
+    }),
   ).toBeVisible();
+}
+
+export async function followAuthor(page: Page, articleTitle: string) {
+  await page.getByTestId('feed-tab-global').click();
+
+  await page
+    .getByRole('heading', {
+      name: articleTitle,
+      level: 2,
+      exact: true,
+    })
+    .click();
+
+  await page.getByTestId('article-follow-button').click();
+}
+
+export async function openYourFeed(page: Page) {
+  await page.getByTestId('nav-home').click();
+  await page.getByTestId('feed-tab-your').click();
 }
 
 export async function verifyArticlesInFeed(page: Page, titles: string[]) {

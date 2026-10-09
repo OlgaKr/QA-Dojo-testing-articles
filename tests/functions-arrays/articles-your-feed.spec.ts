@@ -5,6 +5,8 @@ import {
   loginUser,
   logoutUser,
   createArticle,
+  followAuthor,
+  openYourFeed,
   verifyArticlesInFeed,
   deleteArticle,
 } from './your-feed-helpers';
@@ -40,22 +42,11 @@ test('should display followed author articles in Your Feed', async ({
 
   await registerUser(page);
 
-  await page.getByTestId('feed-tab-global').click();
-
   const articleTitle = titles[titles.length - 1];
 
-  await page
-    .getByRole('heading', {
-      name: articleTitle,
-      level: 2,
-      exact: true,
-    })
-    .click();
+  await followAuthor(page, articleTitle);
 
-  await page.getByTestId('article-follow-button').click();
-
-  await page.getByTestId('nav-home').click();
-  await page.getByTestId('feed-tab-your').click();
+  await openYourFeed(page);
 
   await verifyArticlesInFeed(page, titles);
 
