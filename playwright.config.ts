@@ -1,7 +1,8 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from '@playwright/test';
+//import 'dotenv/config';
 
 export default defineConfig({
-  testDir: "./tests",
+  testDir: './tests',
 
   fullyParallel: true,
 
@@ -11,17 +12,18 @@ export default defineConfig({
 
   workers: process.env.CI ? 1 : undefined,
 
-  reporter: [["dot"], ["html"]],
+  reporter: [['dot'], ['html']],
 
   use: {
-    trace: "on-first-retry",
-    baseURL: "http://104.168.59.50/articles/",
+    trace: 'on-first-retry',
+    baseURL: 'http://104.168.59.50/articles/',
+    //baseURL: process.env.BASE_URL ?? 'https://qa.example.com',
   },
 
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
   ],
 });
