@@ -64,3 +64,46 @@ test('Cookies Test', async ({ page, context }) => {
   expect(updatedCookieValue).toBe('changed');
   expect(initialValue).not.toBe(updatedCookieValue);
 });
+
+test('Cookies Test 2', async ({ page, context }) => {
+  await page.goto('https://www.zara.com/es/en/');
+  await page.getByRole('button', { name: 'Accept All Cookies' }).click();
+  await page.getByRole('button', { name: 'Yes, continue on Spain' }).click();
+  const cookies = await context.cookies();
+
+  const initialCookie = cookies.find(
+    (item) =>
+      item.name === 'CookiesConsent' &&
+      item.domain === '.www.zara.com' &&
+      item.path === '/',
+  );
+
+  if (!initialCookie) {
+    throw new Error('CookiesConsent cookie not found');
+  }
+
+  const initialValue = initialCookie.value;
+
+  await context.addCookies([
+    {
+      ...initialCookie,
+      value: 'changed',
+    },
+  ]);
+
+  const cookiesAfterUpdate = await context.cookies();
+
+  const updatedCookie = cookiesAfterUpdate.find(
+    (item) =>
+      item.name === initialCookie.name &&
+      item.domain === initialCookie.domain &&
+      item.path === initialCookie.path,
+  );
+
+  if (!updatedCookie) {
+    throw new Error('Updated CookiesConsent cookie not found');
+  }
+
+  expect(updatedCookie.value).toBe('changed');
+  expect(updatedCookie.value).not.toBe(initialValue);
+});
