@@ -1,7 +1,4 @@
 import { chromium, expect, type FullConfig } from '@playwright/test';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export default async function globalSetup(config: FullConfig) {
   const email = process.env.TEST_USER_EMAIL;
