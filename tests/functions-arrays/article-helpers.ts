@@ -1,4 +1,5 @@
 import { expect, Page } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
 export async function registerUser(page: Page) {
   const timestamp = Date.now();
@@ -130,3 +131,19 @@ export async function openGlobalFeed(page: Page) {
   await expect(page.getByText('Loading articles…')).toBeHidden();
   await expect(page.locator('main article').first()).toBeVisible();
 }
+
+export async function fillForm(page: Page) {
+  let title = faker.food.vegetable();
+  let description = faker.color.human();
+  let body = faker.lorem.paragraph();
+
+  await page.getByTestId('nav-new-article').click();
+  await page.getByTestId('editor-title').fill(title);
+  await page.getByTestId('editor-description').fill(description);
+  await page.getByTestId('editor-body').fill(body);
+}
+
+export async function submitButton(page: Page) {
+  await page.getByTestId('editor-submit').click();
+}
+

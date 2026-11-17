@@ -1,6 +1,6 @@
-import { test } from './fixtures/api-fixtures';
+import { test } from '../fixtures/api-fixtures';
 import { expect } from '@playwright/test';
-import mockArticles from './mocks/articles.json' with { type: 'json' };
+import mockArticles from '../mocks/articles.json' with { type: 'json' };
 
 test('Should modify article title in POST request', async ({ page, login }) => {
   const originalTitle = 'Original article title';

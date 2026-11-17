@@ -4,7 +4,7 @@ dotenv.config({ path: '.env' });
 
 export default defineConfig({
   testDir: './tests',
-  globalSetup: './global-setup.ts',
+  //globalSetup: './global-setup.ts',
 
   fullyParallel: true,
 
@@ -19,7 +19,7 @@ export default defineConfig({
   use: {
     trace: 'on-first-retry',
     baseURL: 'http://104.168.59.50/articles/',
-    storageState: 'playwright/.auth/user.json',
+    //storageState: 'playwright/.auth/user.json',
   },
 
   projects: [
