@@ -12,9 +12,10 @@ type ApiFixtures = {
 
 export const test = base.extend<ApiFixtures>({
   user: async ({ request }, use) => {
+    const username = faker.internet.username();
     const userData = {
-      username: faker.internet.username(),
-      email: faker.internet.email(),
+      username,
+      email: `${username}@${faker.internet.domainName()}`,
       password: '123456',
     };
 
@@ -23,6 +24,8 @@ export const test = base.extend<ApiFixtures>({
     expect(createdUser.user.username).toBe(userData.username);
     expect(createdUser.user.email).toBe(userData.email);
     expect(createdUser.user.token).toBeTruthy();
+    console.log(createdUser.user.username);
+    console.log(createdUser.user.email);
 
     await use(createdUser);
   },
